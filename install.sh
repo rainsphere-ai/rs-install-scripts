@@ -52,25 +52,32 @@ BASEDIR=$(dirname "$0")
 RS_TMP_PATH=/tmp/rainsphere
 RS_INSTALLER_SCRIPT_PATH=$RS_TMP_PATH/core-installer.sh
 
+download_file() {
+  local url=$1
+  local output=$2
+
+  curl -sSL "$url" -o "$output" || {
+    printf "failed to download file: $url\n"
+    exit 1
+  }
+}
+
 setup_installer() {
   # Installer script names
-  local scripts=(
-    "core-installer.sh"
-    "scripts.sh"
-    "format.sh"
-    "utils.sh"
-  )
+  local scripts
+  scripts[0]="core-installer.sh"
+  scripts[1]="scripts.sh"
+  scripts[2]="format.sh"
+  scripts[3]="utils.sh"
 
   [ -d $RS_TMP_PATH ] && rm -rf "$RS_TMP_PATH"
   [ -d $RS_TMP_PATH ] || mkdir -p "$RS_TMP_PATH"
 
   printf "Downloading rainsphere installer scripts...\n"
-  for script in $scripts; do
-    curl -sSL https://raw.githubusercontent.com/rainsphere-ai/rs-install-scripts/main/$script -o "$RS_TMP_PATH/$script" || {
-      printf "failed to download rainsphere installer script: $script\n"
-      exit 1
-    }
-  done
+  download_file "https://raw.githubusercontent.com/rainsphere-ai/rs-install-scripts/main/${scripts[0]}" "$RS_TMP_PATH/${scripts[0]}"
+  download_file "https://raw.githubusercontent.com/rainsphere-ai/rs-install-scripts/main/${scripts[1]}" "$RS_TMP_PATH/${scripts[1]}"
+  download_file "https://raw.githubusercontent.com/rainsphere-ai/rs-install-scripts/main/${scripts[2]}" "$RS_TMP_PATH/${scripts[2]}"
+  download_file "https://raw.githubusercontent.com/rainsphere-ai/rs-install-scripts/main/${scripts[3]}" "$RS_TMP_PATH/${scripts[3]}"
 }
 
 setup_scripts() {
@@ -198,7 +205,6 @@ main() {
     esac
     shift
   done
-
 
   setup_installer
   setup_scripts
