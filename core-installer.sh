@@ -3,6 +3,9 @@
 # Core installer to set up dev environment
 set -e
 
+local BASEDIR=$(dirname "$0")
+local RS_TMP_PATH=/tmp/rainsphere
+
 setup_paths() {
   # rainsphere dev paths
   RS_DEV_PATH="${RS_DEV_PATH:-$(prompt_user "Enter the absolute path to your rainsphere dev directory" "$PWD")}"
@@ -100,7 +103,7 @@ print_success() {
 }
 
 main() {
-  source scripts.sh
+  source $BASEDIR/scripts.sh || source $RS_TMP_PATH/scripts.sh
 
   setup_scripts
   setup_colors
