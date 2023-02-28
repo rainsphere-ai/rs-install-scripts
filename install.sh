@@ -48,9 +48,9 @@ RUNZSH=${RUNZSH:-yes}
 KEEP_ZSHRC=${KEEP_ZSHRC:-no}
 
 # Core installer path
-local BASEDIR=$(dirname "$0")
-local RS_TMP_PATH=/tmp/rainsphere
-local RS_INSTALLER_SCRIPT_PATH=$RS_TMP_PATH/core-installer.sh
+BASEDIR=$(dirname "$0")
+RS_TMP_PATH=/tmp/rainsphere
+RS_INSTALLER_SCRIPT_PATH=$RS_TMP_PATH/core-installer.sh
 
 setup_installer() {
   # Installer script names
