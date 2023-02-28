@@ -6,6 +6,10 @@ set -e
 BASEDIR=$(dirname "$0")
 RS_TMP_PATH=/tmp/rainsphere
 
+setup_scripts() {
+  source $BASEDIR/scripts.sh || source $RS_TMP_PATH/scripts.sh
+}
+
 setup_paths() {
   # rainsphere dev paths
   RS_DEV_PATH="${RS_DEV_PATH:-$(prompt_user "Enter the absolute path to your rainsphere dev directory" "$PWD")}"
@@ -103,8 +107,6 @@ print_success() {
 }
 
 main() {
-  source $BASEDIR/scripts.sh || source $RS_TMP_PATH/scripts.sh
-
   setup_scripts
   setup_colors
   
