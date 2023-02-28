@@ -3,8 +3,8 @@
 # Core installer to set up dev environment
 set -e
 
-local BASEDIR=$(dirname "$0")
-local RS_TMP_PATH=/tmp/rainsphere
+BASEDIR=$(dirname "$0")
+RS_TMP_PATH=/tmp/rainsphere
 
 setup_paths() {
   # rainsphere dev paths

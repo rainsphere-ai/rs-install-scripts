@@ -1,4 +1,4 @@
-local BASEDIR=$(dirname "$0")
+BASEDIR=$(dirname "$0")
 
 setup_scripts() {
   source $BASEDIR/format.sh
