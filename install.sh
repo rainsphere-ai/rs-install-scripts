@@ -81,7 +81,10 @@ setup_installer() {
 }
 
 setup_scripts() {
-  source $BASEDIR/scripts.sh || source $RS_TMP_PATH/scripts.sh
+  printf "Sourcing from $BASEDIR/scripts.sh\n"
+  source $BASEDIR/scripts.sh
+  printf "Sourcing from $RS_TMP_PATH/scripts.sh\n"
+  source $RS_TMP_PATH/scripts.sh
 }
 
 setup_shell() {
