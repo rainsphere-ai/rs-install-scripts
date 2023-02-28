@@ -63,21 +63,14 @@ download_file() {
 }
 
 setup_installer() {
-  # Installer script names
-  local scripts
-  scripts[0]="core-installer.sh"
-  scripts[1]="scripts.sh"
-  scripts[2]="format.sh"
-  scripts[3]="utils.sh"
-
   [ -d $RS_TMP_PATH ] && rm -rf "$RS_TMP_PATH"
   [ -d $RS_TMP_PATH ] || mkdir -p "$RS_TMP_PATH"
 
   printf "Downloading rainsphere installer scripts...\n"
-  download_file "https://raw.githubusercontent.com/rainsphere-ai/rs-install-scripts/main/${scripts[0]}" "$RS_TMP_PATH/${scripts[0]}"
-  download_file "https://raw.githubusercontent.com/rainsphere-ai/rs-install-scripts/main/${scripts[1]}" "$RS_TMP_PATH/${scripts[1]}"
-  download_file "https://raw.githubusercontent.com/rainsphere-ai/rs-install-scripts/main/${scripts[2]}" "$RS_TMP_PATH/${scripts[2]}"
-  download_file "https://raw.githubusercontent.com/rainsphere-ai/rs-install-scripts/main/${scripts[3]}" "$RS_TMP_PATH/${scripts[3]}"
+  download_file "https://raw.githubusercontent.com/rainsphere-ai/rs-install-scripts/main/core-installer.sh" "$RS_TMP_PATH/core-installer.sh"
+  download_file "https://raw.githubusercontent.com/rainsphere-ai/rs-install-scripts/main/scripts.sh" "$RS_TMP_PATH/scripts.sh"
+  download_file "https://raw.githubusercontent.com/rainsphere-ai/rs-install-scripts/main/format.sh" "$RS_TMP_PATH/format.sh"
+  download_file "https://raw.githubusercontent.com/rainsphere-ai/rs-install-scripts/main/utils.sh" "$RS_TMP_PATH/utils.sh"
 }
 
 setup_scripts() {
