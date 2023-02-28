@@ -47,26 +47,29 @@ CHSH=${CHSH:-yes}
 RUNZSH=${RUNZSH:-yes}
 KEEP_ZSHRC=${KEEP_ZSHRC:-no}
 
-# Installer script path
-RS_CORE_INSTALLER_PATH=/tmp/rainsphere/core-installer.sh
-
-setup_scripts() {
-  source ./format.sh
-  source ./utils.sh
-}
+# Core installer path
+local RS_TMP_PATH=/tmp/rainsphere
+local RS_INSTALLER_SCRIPT_PATH=$RS_TMP_PATH/core-installer.sh
 
 setup_installer() {
-  if file_exists "$RS_CORE_INSTALLER_PATH"; then
-    return
-  fi
+  # Installer script names
+  local scripts=(
+    "core-installer.sh"
+    "scripts.sh"
+    "format.sh"
+    "utils.sh"
+  )
 
-  dir_exists || mkdir -p "$RS_CORE_INSTALLER_PATH"
+  dir_exists $RS_TMP_PATH && rm -rf "$RS_TMP_PATH"
+  dir_exists $RS_TMP_PATH || mkdir -p "$RS_TMP_PATH"
 
-  fmt_info "Downloading rainsphere core installer..."
-  curl -sSL https://raw.githubusercontent.com/rainsphere-ai/rs-onboarding-scripts/main/core-installer.sh -o "$RS_CORE_INSTALLER_PATH" || {
-    fmt_error "failed to download rainsphere core installer"
-    exit 1
-  }
+  fmt_info "Downloading rainsphere installer scripts..."
+  for script in $scripts; do
+    curl -sSL https://raw.githubusercontent.com/rainsphere-ai/rs-install-scripts/main/$script -o "$RS_TMP_PATH/$script" || {
+      fmt_error "failed to download rainsphere installer script: $script"
+      exit 1
+    }
+  done
 }
 
 setup_shell() {
@@ -167,8 +170,8 @@ EOF
 
 run_installer() {
   fmt_info "Running rainsphere core installer..."
-  chmod +x "$RS_CORE_INSTALLER_PATH"
-  exec zsh "$RS_CORE_INSTALLER_PATH" || {
+  chmod +x "$RS_INSTALLER_SCRIPT_PATH"
+  exec zsh "$RS_INSTALLER_SCRIPT_PATH" || {
     fmt_error "failed to run rainsphere core installer"
     exit 1
   }
@@ -190,6 +193,8 @@ main() {
     esac
     shift
   done
+
+  source scripts.sh
 
   setup_scripts
   setup_colors

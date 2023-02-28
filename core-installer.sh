@@ -100,6 +100,8 @@ print_success() {
 }
 
 main() {
+  source scripts.sh
+
   setup_scripts
   setup_colors
   
