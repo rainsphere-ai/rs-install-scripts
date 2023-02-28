@@ -48,6 +48,7 @@ RUNZSH=${RUNZSH:-yes}
 KEEP_ZSHRC=${KEEP_ZSHRC:-no}
 
 # Core installer path
+local BASEDIR=$(dirname "$0")
 local RS_TMP_PATH=/tmp/rainsphere
 local RS_INSTALLER_SCRIPT_PATH=$RS_TMP_PATH/core-installer.sh
 
@@ -194,7 +195,7 @@ main() {
     shift
   done
 
-  source scripts.sh
+  source $BASEDIR/scripts.sh
 
   setup_scripts
   setup_colors

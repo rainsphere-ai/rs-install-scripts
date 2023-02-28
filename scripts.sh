@@ -1,4 +1,6 @@
+local BASEDIR=$(dirname "$0")
+
 setup_scripts() {
-  source ./format.sh
-  source ./utils.sh
+  source $BASEDIR/format.sh
+  source $BASEDIR/utils.sh
 }
