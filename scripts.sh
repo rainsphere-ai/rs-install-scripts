@@ -1,6 +1,5 @@
 BASEDIR=$(dirname "$0")
+RS_TMP_PATH=/tmp/rainsphere
 
-setup_scripts() {
-  source $BASEDIR/format.sh
-  source $BASEDIR/utils.sh
-}
+source $BASEDIR/format.sh || source $RS_TMP_PATH/format.sh
+source $BASEDIR/utils.sh || source $RS_TMP_PATH/utils.sh

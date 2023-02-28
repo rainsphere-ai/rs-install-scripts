@@ -61,16 +61,20 @@ setup_installer() {
     "utils.sh"
   )
 
-  dir_exists $RS_TMP_PATH && rm -rf "$RS_TMP_PATH"
-  dir_exists $RS_TMP_PATH || mkdir -p "$RS_TMP_PATH"
+  [ -d $RS_TMP_PATH ] && rm -rf "$RS_TMP_PATH"
+  [ -d $RS_TMP_PATH ] || mkdir -p "$RS_TMP_PATH"
 
-  fmt_info "Downloading rainsphere installer scripts..."
+  printf "Downloading rainsphere installer scripts...\n"
   for script in $scripts; do
     curl -sSL https://raw.githubusercontent.com/rainsphere-ai/rs-install-scripts/main/$script -o "$RS_TMP_PATH/$script" || {
-      fmt_error "failed to download rainsphere installer script: $script"
+      printf "failed to download rainsphere installer script: $script\n"
       exit 1
     }
   done
+}
+
+setup_scripts() {
+  source $BASEDIR/scripts.sh || source $RS_TMP_PATH/scripts.sh
 }
 
 setup_shell() {
@@ -195,11 +199,10 @@ main() {
     shift
   done
 
-  source $BASEDIR/scripts.sh
 
+  setup_installer
   setup_scripts
   setup_colors
-  setup_installer
   setup_shell
 
   if ! command_exists zsh; then
