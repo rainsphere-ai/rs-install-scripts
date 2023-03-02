@@ -1,7 +1,6 @@
 #!/bin/zsh
 #
 # Core installer to set up dev environment
-set -e
 
 BASEDIR=$(dirname "$0")
 RS_TMP_PATH=/tmp/rainsphere
