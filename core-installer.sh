@@ -58,17 +58,17 @@ setup_nostromo() {
 
 setup_dev() {
   fmt_info "Cloning development scripts..."
-  dir_exists $RS_DEV_PATH/rs-onboarding-scripts && {
+  if dir_exists $RS_DEV_PATH/rs-onboarding-scripts; then
     # Update the repo if it already exists
     $(cd $RS_DEV_PATH/rs-onboarding-scripts && git checkout main && git pull)
-  } || {
+  else
     pushd $RS_DEV_PATH
     git clone git@github.com:rainsphere-ai/rs-onboarding-scripts.git || {
       fmt_error "rs-onboarding-scripts clone failed"
       exit 1
     }
     popd
-  }
+  fi
 
   [ -z $RS_RAINSPHERE_SCRIPT_LOADED ] && {
     source $RS_DEV_ONBOARDING_PATH/rainsphere.sh || {
