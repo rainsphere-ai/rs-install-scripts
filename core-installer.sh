@@ -60,7 +60,7 @@ setup_dev() {
   fmt_info "Cloning development scripts..."
   if dir_exists $RS_DEV_PATH/rs-onboarding-scripts; then
     # Update the repo if it already exists
-    $(cd $RS_DEV_PATH/rs-onboarding-scripts && git checkout main && git pull)
+    $(cd $RS_DEV_PATH/rs-onboarding-scripts && git checkout main && git pull) > /dev/null 2>&1
   else
     pushd $RS_DEV_PATH
     git clone git@github.com:rainsphere-ai/rs-onboarding-scripts.git || {
